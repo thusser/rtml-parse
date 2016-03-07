@@ -99,7 +99,7 @@ class TestElements(unittest.TestCase):
         wheel = FilterWheel(camera)
         f = Filter(wheel, filter_type=FilterTypes.clear)
         f.Center = misc.SpectralUnitValue(3.14159, misc.SpectralUnits.nanometers)
-        f.FWHM = misc.SpectralUnitValue(42, misc.SpectralUnits.centimeters)
+        f.FWHM = misc.SpectralUnitValue(42., misc.SpectralUnits.centimeters)
         f.PeakEfficiency = 0.95
         f.Uri = 'uri://test.org/'
 
@@ -110,7 +110,7 @@ class TestElements(unittest.TestCase):
         wheel = camera.find_first(FilterWheel)
         f = wheel.find_first(Filter)
         self.assertEqual(str(f.Center), "3.14159 nanometers")
-        self.assertEqual(str(f.FWHM), "42 centimeters")
+        self.assertEqual(str(f.FWHM), "42.0 centimeters")
         self.assertEqual(f.PeakEfficiency, 0.95)
         self.assertEqual(f.Uri, 'uri://test.org/')
 

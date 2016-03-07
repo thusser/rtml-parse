@@ -40,27 +40,17 @@ class SpectralUnits(Enum):
     TeV = "TeV"
 
 
+@auto_attr_check
 class SpectralUnitValue(object):
+    Value = float
+    Units = SpectralUnits
+
     def __init__(self, value, unit):
         self.Value = value
-        self._units = None
         self.Units = unit
 
-    @property
-    def Units(self):
-        return self._units
-
-    @Units.setter
-    def Units(self, value):
-        if isinstance(value, SpectralUnits):
-            self._units = value
-        elif isinstance(value, basestring):
-            self._units = SpectralUnits(value)
-        else:
-            raise ValueError
-
     def __str__(self):
-        return str(self.Value) + ' ' + self._units.value
+        return str(self.Value) + ' ' + self.Units.value
 
     @staticmethod
     def from_xml(parent, tagname, namespace=''):
@@ -77,7 +67,7 @@ class SpectralUnitValue(object):
     def to_xml(self, parent, tagname):
         el = etree.SubElement(parent, tagname)
         el.text = str(self.Value)
-        el.attrib['units'] = self._units.value
+        el.attrib['units'] = self.Units.value
 
 
 class SpectralEfficiencyAccess(object):
