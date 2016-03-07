@@ -3,6 +3,7 @@ from enum import Enum
 
 from .baseelement import BaseElement
 from . import misc
+from rtmlparse.misc import unitvalues
 from .misc import auto_attr_check
 
 
@@ -70,8 +71,8 @@ class FilterTypes(Enum):
 @auto_attr_check
 class Filter(BaseElement):
     Type = FilterTypes
-    Center = misc.SpectralUnitValue
-    FWHM = misc.SpectralUnitValue
+    Center = unitvalues.SpectralType
+    FWHM = unitvalues.SpectralType
     PeakEfficiency = float
     Uri = str
 
@@ -113,7 +114,7 @@ class Filter(BaseElement):
         self.Type = FilterTypes(element.attrib['type']) if 'type' in element.attrib else None
 
         # other stuff
-        self.Center = misc.SpectralUnitValue.from_xml(element, 'Center', namespace=ns)
-        self.FWHM = misc.SpectralUnitValue.from_xml(element, 'FWHM', namespace=ns)
+        self.Center = unitvalues.SpectralType.from_xml(element, 'Center', namespace=ns)
+        self.FWHM = unitvalues.SpectralType.from_xml(element, 'FWHM', namespace=ns)
         self.PeakEfficiency = self.from_text_value(element, 'PeakEfficiency', float, namespace=ns)
         self.Uri = self.from_text_value(element, 'Uri', str, namespace=ns)

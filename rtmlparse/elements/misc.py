@@ -23,53 +23,6 @@ def auto_attr_check(cls):
     return type(cls)(cls.__name__, cls.__bases__, new_dct)
 
 
-class SpectralUnits(Enum):
-    centimeters = "centimeters"
-    eV = "eV"
-    GeV = "GeV"
-    gigahertz = "gigahertz"
-    hertz = "hertz"
-    keV = "keV"
-    kilohertz = "kilohertz"
-    megahertz = "megahertz"
-    meters = "meters"
-    MeV = "MeV"
-    micrometers = "micrometers"
-    millimeters = "millimeters"
-    nanometers = "nanometers"
-    TeV = "TeV"
-
-
-@auto_attr_check
-class SpectralUnitValue(object):
-    Value = float
-    Units = SpectralUnits
-
-    def __init__(self, value, unit):
-        self.Value = value
-        self.Units = unit
-
-    def __str__(self):
-        return str(self.Value) + ' ' + self.Units.value
-
-    @staticmethod
-    def from_xml(parent, tagname, namespace=''):
-        # find element
-        el = parent.find(namespace + tagname)
-        if el is None:
-            return None
-        # set it
-        value = float(el.text)
-        units = SpectralUnits(el.attrib['units'])
-        # return new instance
-        return SpectralUnitValue(value, units)
-
-    def to_xml(self, parent, tagname):
-        el = etree.SubElement(parent, tagname)
-        el.text = str(self.Value)
-        el.attrib['units'] = self.Units.value
-
-
 class SpectralEfficiencyAccess(object):
     @property
     def SpectralEfficiency(self):

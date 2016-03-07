@@ -4,7 +4,7 @@ import tempfile
 
 from rtmlparse import RTML
 from rtmlparse.elements import *
-from rtmlparse.elements import misc
+from rtmlparse.misc import units, unitvalues
 
 
 class TestMinimalRTML(unittest.TestCase):
@@ -98,8 +98,8 @@ class TestElements(unittest.TestCase):
         camera = Camera(self.rtml, name='TestCamera')
         wheel = FilterWheel(camera)
         f = Filter(wheel, filter_type=FilterTypes.clear)
-        f.Center = misc.SpectralUnitValue(3.14159, misc.SpectralUnits.nanometers)
-        f.FWHM = misc.SpectralUnitValue(42., misc.SpectralUnits.centimeters)
+        f.Center = unitvalues.SpectralType(3.14159, units.SpectralUnits.nanometers)
+        f.FWHM = unitvalues.SpectralType(42., units.SpectralUnits.centimeters)
         f.PeakEfficiency = 0.95
         f.Uri = 'uri://test.org/'
 
