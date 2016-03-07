@@ -1,0 +1,38 @@
+from lxml import etree
+
+from .baseelement import BaseElement
+
+
+class ExposureConstraint(BaseElement):
+    def __init__(self, parent, name=None, uid=None):
+        BaseElement.__init__(self, 'ExposureConstraint', parent, name=name, uid=uid)
+        self.Description = None
+        self.Count = None
+        self.MinimumSignalToNoise = None
+        self.MaximumSignalToNoise = None
+
+    def to_xml(self, parent, add_children=True):
+        # add element
+        element = BaseElement.to_xml(self, parent, add_children=add_children)
+        if element is None:
+            return None
+
+        # other fields
+        self.add_text_value(element, 'Description', self.Description)
+        self.add_text_value(element, 'Count', self.Count, 'd')
+        self.add_text_value(element, 'MinimumSignalToNoise', self.MinimumSignalToNoise, '.2f')
+        self.add_text_value(element, 'MaximumSignalToNoise', self.MaximumSignalToNoise, '.2f')
+
+        # return base element
+        return element
+
+    def from_xml(self, xml, rtml):
+        # base call
+        BaseElement.from_xml(self, xml, rtml)
+        ns = '{' + rtml.namespace + '}'
+
+        # other fields
+        self.Description = self.from_text_value(xml, ns + 'Description')
+        self.Count = self.from_text_value(xml, ns + 'Count', int)
+        self.MinimumSignalToNoise = self.from_text_value(xml, ns + 'MinimumSignalToNoise', float)
+        self.MaximumSignalToNoise = self.from_text_value(xml, ns + 'MaximumSignalToNoise', float)
