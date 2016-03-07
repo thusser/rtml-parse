@@ -1,9 +1,14 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class Exposure(BaseElement):
+    Description = str
+    Count = int
+
     def __init__(self, parent, name=None, uid=None):
         BaseElement.__init__(self, 'Exposure', parent, name=name, uid=uid)
         self.Description = None

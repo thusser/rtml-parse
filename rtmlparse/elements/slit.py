@@ -1,9 +1,14 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class Slit(BaseElement):
+    PositionAngle = float
+    #WidthLength =
+
     def __init__(self, parent, name=None, uid=None, angle=None, width_length=None):
         BaseElement.__init__(self, 'Slit', parent, name=name, uid=uid)
         self.PositionAngle = angle

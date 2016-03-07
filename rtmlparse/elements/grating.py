@@ -1,9 +1,13 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class Grating(BaseElement):
+    Angle = float
+
     def __init__(self, parent, name=None, uid=None):
         BaseElement.__init__(self, 'Grating', parent, name=name, uid=uid)
         self.Angle = None

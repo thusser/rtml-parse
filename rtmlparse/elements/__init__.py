@@ -5,7 +5,7 @@ from .detector import Detector
 from .device import Device
 from .exposure import Exposure
 from .exposureconstraint import ExposureConstraint
-from .filter import Filter
+from .filter import Filter, FilterTypes
 from .filterwheel import FilterWheel
 from .grating import Grating
 from .history import History
@@ -18,7 +18,7 @@ from .setup import Setup
 from .slit import Slit
 from .slitmask import SlitMask
 from .spectralefficiency import SpectralEfficiency
-from .spectralregion import SpectralRegion
+from .spectralregion import SpectralRegion, SpectralRegionTypes
 from .spectrograph import Spectrograph
 from .target import Target
 from .telescope import Telescope

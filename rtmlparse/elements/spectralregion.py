@@ -2,27 +2,32 @@ from lxml import etree
 from enum import Enum
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+class SpectralRegionTypes(Enum):
+    radio = "radio"
+    millimeter = "millimeter"
+    infrared = "infrared"
+    optical = "optical"
+    ultraviolet = "ultraviolet"
+    extreme_ultraviolet = "extreme-ultraviolet"
+    x_ray = "x-ray"
+    gamma_ray = "gamma-ray"
+    gravitational_wave = "gravitational wave"
+    cosmos_ray = "cosmic ray"
+    neutrino = "neutrino"
+    other = "other"
+
+
+@auto_attr_check
 class SpectralRegion(BaseElement):
-    class Types(Enum):
-        radio = "radio"
-        millimeter = "millimeter"
-        infrared = "infrared"
-        optical = "optical"
-        ultraviolet = "ultraviolet"
-        extreme_ultraviolet = "extreme-ultraviolet"
-        x_ray = "x-ray"
-        gamma_ray = "gamma-ray"
-        gravitational_wave = "gravitational wave"
-        cosmos_ray = "cosmic ray"
-        neutrino = "neutrino"
-        other = "other"
+    Type = SpectralRegionTypes
 
     def __init__(self, parent, name=None, uid=None, description=None, uri=None, data=None,
-                 type=Types.other):
+                 type=SpectralRegionTypes.other):
         BaseElement.__init__(self, 'SpectralRegion', parent, name=None, uid=uid)
-        self._type = type
+        self.Type = type
 
     def to_xml(self, parent):
         # add element
@@ -30,24 +35,9 @@ class SpectralRegion(BaseElement):
         if element is None:
             return None
         # set text and return element
-        element.text = self._type.value
+        element.text = self.Type.value
         return element
 
     def from_xml(self, element, rtml):
         BaseElement.from_xml(self, element, rtml)
-        self._type = SpectralRegion.Types(element.text)
-
-    @property
-    def Type(self):
-        return self._type
-
-    @Type.setter
-    def Type(self, value):
-        if isinstance(value, basestring):
-            self._type = SpectralRegion.Types(basestring)
-        elif isinstance(value, SpectralRegion.Types):
-            self._type = value
-        else:
-            raise ValueError
-
-
+        self.Type = SpectralRegionTypes(element.text)

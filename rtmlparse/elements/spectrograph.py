@@ -1,10 +1,14 @@
 from lxml import etree
 
 from .baseelement import BaseElement
-from .misc import SpectralEfficiencyAccess, SpectralRegionAccess, SlitAccess, SlitMaskAccess
+from .misc import auto_attr_check, SpectralEfficiencyAccess, SpectralRegionAccess, SlitAccess, SlitMaskAccess
 
 
+@auto_attr_check
 class Spectrograph(BaseElement, SpectralEfficiencyAccess, SpectralRegionAccess, SlitAccess, SlitMaskAccess):
+    Description = str
+    PositionAngle = float
+
     def __init__(self, parent, name=None, uid=None):
         # BaseElement
         import rtmlparse.elements as e

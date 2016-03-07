@@ -2,10 +2,14 @@ from lxml import etree
 import warnings
 
 from .baseelement import BaseElement
-from .misc import SpectralEfficiencyAccess, SpectralRegionAccess
+from .misc import SpectralEfficiencyAccess, SpectralRegionAccess, auto_attr_check
 
 
+@auto_attr_check
 class Camera(BaseElement, SpectralEfficiencyAccess, SpectralRegionAccess):
+    Description = str
+    PlateScale = float
+
     def __init__(self, parent, name=None, uid=None):
         # BaseElement
         import rtmlparse.elements as e

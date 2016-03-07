@@ -1,9 +1,16 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class Telescope(BaseElement):
+    Description = str
+    FocalLength = float
+    FocalRatio = str
+    PlateScale = float
+
     def __init__(self, parent, name=None, uid=None):
         # BaseElement
         import rtmlparse.elements as e

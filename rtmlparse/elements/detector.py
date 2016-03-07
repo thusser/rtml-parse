@@ -1,9 +1,19 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class Detector(BaseElement):
+    ColumnPixelSize = float
+    Description = str
+    NumColumns = int
+    NumRows = int
+    PixelRadius = float
+    PixelSize = float
+    PositionAngle = float
+
     def __init__(self, parent, name=None, uid=None):
         BaseElement.__init__(self, 'Detector', parent, name=name, uid=uid)
         self.Binning = None

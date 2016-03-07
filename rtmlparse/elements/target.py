@@ -1,9 +1,15 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class Target(BaseElement):
+    RightAscension = float
+    Declination = float
+    TargetBrightness = float
+
     def __init__(self, parent, name=None, uid=None):
         BaseElement.__init__(self, 'Target', parent, name=name, uid=uid)
         self.RightAscension = None

@@ -81,7 +81,7 @@ class TestElements(unittest.TestCase):
         camera.Description = "Some test camera"
         camera.SpectralEfficiency = SpectralEfficiency(self.rtml, description='Some description',
                                                        uri='http://example.org')
-        camera.SpectralRegion = SpectralRegion.Types.optical
+        camera.SpectralRegion = SpectralRegionTypes.optical
 
         # save it and load it again
         rtml = self.saveLoad()
@@ -91,13 +91,13 @@ class TestElements(unittest.TestCase):
         self.assertEqual(camera.name, 'TestCamera')
         self.assertEqual(camera.SpectralEfficiency.Description, 'Some description')
         self.assertEqual(camera.SpectralEfficiency.Uri, 'http://example.org')
-        self.assertEqual(camera.SpectralRegion, SpectralRegion.Types.optical)
+        self.assertEqual(camera.SpectralRegion, SpectralRegionTypes.optical)
 
     def test_filter(self):
         # create filter
         camera = Camera(self.rtml, name='TestCamera')
         wheel = FilterWheel(camera)
-        f = Filter(wheel, filter_type=Filter.Types.clear)
+        f = Filter(wheel, filter_type=FilterTypes.clear)
         f.Center = misc.SpectralUnitValue(3.14159, misc.SpectralUnits.nanometers)
         f.FWHM = misc.SpectralUnitValue(42, misc.SpectralUnits.centimeters)
         f.PeakEfficiency = 0.95
@@ -121,7 +121,7 @@ class TestElements(unittest.TestCase):
         spectrograph.PositionAngle = 3.14
         # single slit
         slit = Slit(spectrograph)
-        slit.PositionAngle = 42
+        slit.PositionAngle = 42.
         slit.WidthLength = (7, 13)
         # slit mask with 3 slits
         slitmask = SlitMask(spectrograph)
@@ -137,10 +137,28 @@ class TestElements(unittest.TestCase):
         self.assertEqual(spectrograph.name, 'TestSpectrograph')
         self.assertEqual(spectrograph.Description, 'Some test spectrograph')
         self.assertEqual(spectrograph.PositionAngle, 3.14)
-        self.assertEqual(spectrograph.Slit.PositionAngle, 42)
+        self.assertEqual(spectrograph.Slit.PositionAngle, 42.)
         self.assertEqual(spectrograph.Slit.WidthLength, (7, 13))
         self.assertEqual(len(spectrograph.SlitMask.find(Slit)), 3)
 
+    def test_location(self):
+        # create a setup with a location
+        setup = Setup(self.rtml)
+        location = Location(setup)
+        location.EastLongitude = 20.810694
+        location.Latitude = -32.379444
+        location.Height = 1798.
+        location.TimeZone = 2
+
+        # save it and load it again
+        rtml = self.saveLoad()
+
+        # check
+        location = rtml.find_first(Setup).find_first(Location)
+        self.assertEqual(location.EastLongitude, 20.810694)
+        self.assertEqual(location.Latitude, -32.379444)
+        self.assertEqual(location.Height, 1798.)
+        self.assertEqual(location.TimeZone, 2)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

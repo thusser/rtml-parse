@@ -9,6 +9,6 @@ class Setup(BaseElement):
         import rtmlparse.elements as e
         BaseElement.__init__(self, 'Setup', parent, name=name, uid=uid,
                              valid_element_types=[e.Spectrograph, e.Target, e.Grating, e.Filter, e.Camera,
-                                                  e.Exposure, e.ExposureConstraint])
+                                                  e.Exposure, e.ExposureConstraint, e.Location])
 
 

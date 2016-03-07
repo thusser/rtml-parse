@@ -1,15 +1,22 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class Location(BaseElement):
-    def __init__(self, parent, name=None, uid=None):
+    EastLongitude = float
+    Latitude = float
+    Height = float
+    TimeZone = int
+
+    def __init__(self, parent, name=None, uid=None, lon=None, lat=None, height=None, timezone=None):
         BaseElement.__init__(self, 'Location', parent, name=name, uid=uid)
-        self.EastLongitude = None
-        self.Latitude = None
-        self.Height = None
-        self.TimeZone = None
+        self.EastLongitude = lon
+        self.Latitude = lat
+        self.Height = height
+        self.TimeZone = timezone
 
     def to_xml(self, parent, add_children=True):
         # add element

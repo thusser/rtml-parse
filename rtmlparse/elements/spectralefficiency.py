@@ -1,9 +1,15 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class SpectralEfficiency(BaseElement):
+    Description = str
+    Uri = str
+    Data = str
+
     def __init__(self, parent, name=None, uid=None, description=None, uri=None, data=None):
         BaseElement.__init__(self, 'SpectralEfficiency', parent, name=None, uid=uid)
         self.Description = description

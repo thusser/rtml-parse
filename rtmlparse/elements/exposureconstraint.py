@@ -1,9 +1,16 @@
 from lxml import etree
 
 from .baseelement import BaseElement
+from .misc import auto_attr_check
 
 
+@auto_attr_check
 class ExposureConstraint(BaseElement):
+    Description = str
+    Count = int
+    MinimumSignalToNoise = float
+    MaximumSignalToNoise = float
+
     def __init__(self, parent, name=None, uid=None):
         BaseElement.__init__(self, 'ExposureConstraint', parent, name=name, uid=uid)
         self.Description = None
