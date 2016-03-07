@@ -32,8 +32,8 @@ class Location(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other stuff
-        self.EastLongitude = self.from_text_value(element, ns + 'EastLongitude', float)
-        self.Latitude = self.from_text_value(element, ns + 'Latitude', float)
-        self.Height = self.from_text_value(element, ns + 'Height', float)
-        self.TimeZone = self.from_text_value(element, ns + 'TimeZone', int)
+        self.EastLongitude = self.from_text_value(element, 'EastLongitude', float, namespace=ns)
+        self.Latitude = self.from_text_value(element, 'Latitude', float, namespace=ns)
+        self.Height = self.from_text_value(element, 'Height', float, namespace=ns)
+        self.TimeZone = self.from_text_value(element, 'TimeZone', int, namespace=ns)
 

@@ -36,9 +36,9 @@ class History(BaseElement):
             self.Agent = agent.attrib['name']
 
         # others
-        self.Description = self.from_text_value(xml, ns + 'Description')
-        self.Error = self.from_text_value(xml, ns + 'Error')
-        #self.Rejection = self.from_text_value(xml, ns + 'Rejection')
-        self.Version = self.from_text_value(xml, ns + 'Version', int)
+        self.Description = self.from_text_value(xml, 'Description', namespace=ns)
+        self.Error = self.from_text_value(xml, 'Error', namespace=ns)
+        #self.Rejection = self.from_text_value(xml, 'Rejection', namespace=ns)
+        self.Version = self.from_text_value(xml, 'Version', int, namespace=ns)
 
 

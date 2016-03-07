@@ -29,5 +29,5 @@ class SpectralEfficiency(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other stuff
-        self.Description = self.from_text_value(element, ns + 'Description', str)
-        self.Uri = self.from_text_value(element, ns + 'Uri', str)
+        self.Description = self.from_text_value(element, 'Description', str, namespace=ns)
+        self.Uri = self.from_text_value(element, 'Uri', str, namespace=ns)

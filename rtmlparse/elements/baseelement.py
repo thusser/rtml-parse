@@ -277,8 +277,8 @@ class BaseElement(object):
                 el.attrib[key] = val
 
     @staticmethod
-    def from_text_value(element, tagname, type=str):
-        el = element.find(tagname)
+    def from_text_value(element, tagname, type=str, namespace=''):
+        el = element.find(namespace + tagname)
         return type(el.text) if el is not None else None
 
     @staticmethod
@@ -291,12 +291,12 @@ class BaseElement(object):
             etree.SubElement(el, 'Y').text = str(value[1])
 
     @staticmethod
-    def from_xy_value(element, tagname, x, y):
-        el = element.find(tagname)
+    def from_xy_value(element, tagname, namespace=''):
+        el = element.find(namespace + tagname)
         if el is None:
             return None
-        x = int(bin.find(x).text)
-        y = int(bin.find(y).text)
+        x = float(el.find(namespace + 'X').text)
+        y = float(el.find(namespace + 'Y').text)
         return x, y
 
     def _get_one_element(self, element_type):

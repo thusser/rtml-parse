@@ -105,10 +105,10 @@ class Filter(BaseElement):
         self.Type = Filter.Types(element.attrib['type']) if 'type' in element.attrib else None
 
         # other stuff
-        self._center = misc.SpectralUnitValue.from_xml(element, ns + 'Center')
-        self._fwhm = misc.SpectralUnitValue.from_xml(element, ns + 'FWHM')
-        self.PeakEfficiency = self.from_text_value(element, ns + 'PeakEfficiency', float)
-        self.Uri = self.from_text_value(element, ns + 'Uri', str)
+        self._center = misc.SpectralUnitValue.from_xml(element, 'Center', namespace=ns)
+        self._fwhm = misc.SpectralUnitValue.from_xml(element, 'FWHM', namespace=ns)
+        self.PeakEfficiency = self.from_text_value(element, 'PeakEfficiency', float, namespace=ns)
+        self.Uri = self.from_text_value(element, 'Uri', str, namespace=ns)
 
     @property
     def Type(self):

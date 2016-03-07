@@ -37,7 +37,7 @@ class Telescope(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other stuff
-        self.Description = self.from_text_value(element, ns + 'Description', str)
-        self.FocalLength = self.from_text_value(element, ns + 'FocalLength', float)
-        self.FocalRatio = self.from_text_value(element, ns + 'FocalRatio', str)
-        self.PlateScale = self.PlateScale(element, ns + 'PlateScale', float)
+        self.Description = self.from_text_value(element, 'Description', str, namespace=ns)
+        self.FocalLength = self.from_text_value(element, 'FocalLength', float, namespace=ns)
+        self.FocalRatio = self.from_text_value(element, 'FocalRatio', str, namespace=ns)
+        self.PlateScale = self.from_text_value(element, 'PlateScale', float, namespace=ns)

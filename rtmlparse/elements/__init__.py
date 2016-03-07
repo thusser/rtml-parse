@@ -16,6 +16,7 @@ from .schedule import Schedule
 from .scoring import Scoring
 from .setup import Setup
 from .slit import Slit
+from .slitmask import SlitMask
 from .spectralefficiency import SpectralEfficiency
 from .spectralregion import SpectralRegion
 from .spectrograph import Spectrograph

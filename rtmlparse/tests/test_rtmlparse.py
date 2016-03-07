@@ -114,6 +114,33 @@ class TestElements(unittest.TestCase):
         self.assertEqual(f.PeakEfficiency, 0.95)
         self.assertEqual(f.Uri, 'uri://test.org/')
 
+    def test_spectrograph(self):
+        # create spectrograph
+        spectrograph = Spectrograph(self.rtml, name='TestSpectrograph')
+        spectrograph.Description = "Some test spectrograph"
+        spectrograph.PositionAngle = 3.14
+        # single slit
+        slit = Slit(spectrograph)
+        slit.PositionAngle = 42
+        slit.WidthLength = (7, 13)
+        # slit mask with 3 slits
+        slitmask = SlitMask(spectrograph)
+        Slit(slitmask)
+        Slit(slitmask)
+        Slit(slitmask)
+
+        # save it and load it again
+        rtml = self.saveLoad()
+
+        # check
+        spectrograph = rtml.find_first(Spectrograph)
+        self.assertEqual(spectrograph.name, 'TestSpectrograph')
+        self.assertEqual(spectrograph.Description, 'Some test spectrograph')
+        self.assertEqual(spectrograph.PositionAngle, 3.14)
+        self.assertEqual(spectrograph.Slit.PositionAngle, 42)
+        self.assertEqual(spectrograph.Slit.WidthLength, (7, 13))
+        self.assertEqual(len(spectrograph.SlitMask.find(Slit)), 3)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

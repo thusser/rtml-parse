@@ -4,11 +4,10 @@ from .baseelement import BaseElement
 
 
 class Slit(BaseElement):
-    def __init__(self, parent, name=None, uid=None):
+    def __init__(self, parent, name=None, uid=None, angle=None, width_length=None):
         BaseElement.__init__(self, 'Slit', parent, name=name, uid=uid)
-        self.positionAngle = 0.
-        self.width = 10.
-        self.length = 10.
+        self.PositionAngle = angle
+        self.WidthLength = width_length
 
     def to_xml(self, parent, add_children=True):
         # add slit
@@ -16,23 +15,18 @@ class Slit(BaseElement):
         if element is None:
             return None
 
-        # position angle
-        etree.SubElement(element, 'PositionAngle').text = '{0:.2f}'.format(self.positionAngle)
-
-        # width/length
-        size = etree.SubElement(element, 'WidthLength')
-        etree.SubElement(size, 'X').text = '{0:.2f}'.format(self.width)
-        etree.SubElement(size, 'Y').text = '{0:.2f}'.format(self.length)
+        # other stuff
+        self.add_text_value(element, 'PositionAngle', self.PositionAngle, 'f')
+        self.add_xy_value(element, 'WidthLength', self.WidthLength)
 
         # return base element
         return element
 
-    def from_xml(self, xml, rtml):
+    def from_xml(self, element, rtml):
         # base call
-        BaseElement.from_xml(self, xml, rtml)
+        BaseElement.from_xml(self, element, rtml)
         ns = '{' + rtml.namespace + '}'
 
-        # grating angle
-        angle = xml.find(ns + 'PositionAngle')
-        if angle is not None:
-            self.positionAngle = float(angle.text)
+        # other stuff
+        self.PositionAngle = self.from_text_value(element, 'PositionAngle', float, namespace=ns)
+        self.WidthLength = self.from_xy_value(element, 'WidthLength', namespace=ns)

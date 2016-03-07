@@ -2,9 +2,10 @@ from lxml import etree
 import warnings
 
 from .baseelement import BaseElement
+from .misc import SpectralEfficiencyAccess, SpectralRegionAccess
 
 
-class Camera(BaseElement):
+class Camera(BaseElement, SpectralEfficiencyAccess, SpectralRegionAccess):
     def __init__(self, parent, name=None, uid=None):
         # BaseElement
         import rtmlparse.elements as e
@@ -35,26 +36,5 @@ class Camera(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other stuff
-        self.Description = self.from_text_value(element, ns + 'Description', str)
-        self.PlateScale = self.from_text_value(element, ns + 'PlateScale', float)
-
-    @property
-    def SpectralEfficiency(self):
-        from .spectralefficiency import SpectralEfficiency
-        return self._get_one_element(SpectralEfficiency)
-
-    @SpectralEfficiency.setter
-    def SpectralEfficiency(self, value):
-        from .spectralefficiency import SpectralEfficiency
-        self._set_one_element(SpectralEfficiency, value)
-
-    @property
-    def SpectralRegion(self):
-        from .spectralregion import SpectralRegion
-        region = self._get_one_element(SpectralRegion)
-        return None if region is None else region.Type
-
-    @SpectralRegion.setter
-    def SpectralRegion(self, value):
-        from .spectralregion import SpectralRegion
-        self._set_one_element(SpectralRegion, None if value is None else SpectralRegion(self, type=value))
+        self.Description = self.from_text_value(element, 'Description', str, namespace=ns)
+        self.PlateScale = self.from_text_value(element, 'PlateScale', float, namespace=ns)

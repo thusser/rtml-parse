@@ -202,7 +202,7 @@ class RTML(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other stuff
-        self.RespondTo = self.from_text_value(element, ns + 'RespondTo', str)
+        self.RespondTo = self.from_text_value(element, 'RespondTo', str, namespace=ns)
         t2 = Time('2010-01-01 00:00:00', scale='utc')
         #self.expires = datetime.datetime.strptime(element.attrib['expires'], '%Y-%m-%dT%H:%M:%Sz') \
         #    if 'expires' in element.attrib else None

@@ -32,7 +32,7 @@ class ExposureConstraint(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other fields
-        self.Description = self.from_text_value(xml, ns + 'Description')
-        self.Count = self.from_text_value(xml, ns + 'Count', int)
-        self.MinimumSignalToNoise = self.from_text_value(xml, ns + 'MinimumSignalToNoise', float)
-        self.MaximumSignalToNoise = self.from_text_value(xml, ns + 'MaximumSignalToNoise', float)
+        self.Description = self.from_text_value(xml, 'Description', namespace=ns)
+        self.Count = self.from_text_value(xml, 'Count', int, namespace=ns)
+        self.MinimumSignalToNoise = self.from_text_value(xml, 'MinimumSignalToNoise', float, namespace=ns)
+        self.MaximumSignalToNoise = self.from_text_value(xml, 'MaximumSignalToNoise', float, namespace=ns)

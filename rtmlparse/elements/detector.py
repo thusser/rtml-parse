@@ -40,11 +40,11 @@ class Detector(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other stuff
-        self.Binning = self.from_xy_value(element, 'Binning', ns + 'X', ns + 'Y')
-        self.ColumnPixelSize = self.from_text_value(element, ns + 'ColumnPixelSize', float)
-        self.Description = self.from_text_value(element, ns + 'Description', str)
-        self.NumColumns = self.from_text_value(element, ns + 'NumColumns', int)
-        self.NumRows = self.from_text_value(element, ns + 'NumRows', int)
-        self.PixelRadius = self.from_text_value(element, ns + 'PixelRadius', float)
-        self.PixelSize = self.from_text_value(element, ns + 'PixelSize', float)
-        self.PositionAngle = self.from_text_value(element, ns + 'PositionAngle', float)
+        self.Binning = self.from_xy_value(element, 'Binning', namespace=ns)
+        self.ColumnPixelSize = self.from_text_value(element, 'ColumnPixelSize', float, namespace=ns)
+        self.Description = self.from_text_value(element, 'Description', str, namespace=ns)
+        self.NumColumns = self.from_text_value(element, 'NumColumns', int, namespace=ns)
+        self.NumRows = self.from_text_value(element, 'NumRows', int, namespace=ns)
+        self.PixelRadius = self.from_text_value(element, 'PixelRadius', float, namespace=ns)
+        self.PixelSize = self.from_text_value(element, 'PixelSize', float, namespace=ns)
+        self.PositionAngle = self.from_text_value(element, 'PositionAngle', float, namespace=ns)
