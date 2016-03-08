@@ -20,6 +20,7 @@ from .location import Location
 from .mirrors import Mirrors
 from .pipeline import Pipeline
 from .project import Project
+from .readoutnoise import ReadoutNoise
 from .schedule import Schedule
 from .scoring import Scoring
 from .setup import Setup
