@@ -13,9 +13,12 @@ import rtmlparse.templates
 from rtmlparse.irtml import ITemplate
 from rtmlparse.elements.baseelement import BaseElement
 from rtmlparse.elements import *
+from rtmlparse.elements.misc import HistoryAccess
+
 
 # define list of root elements
 ROOT_ELEMENTS = [
+    History,
     Target,
     Telescope,
     Camera, Spectrograph, Detector, Device,
@@ -30,7 +33,7 @@ ROOT_ELEMENTS = [
 ]
 
 
-class RTML(BaseElement):
+class RTML(BaseElement, HistoryAccess):
     """ Enumeration for RTML modes. """
 
     class Mode(Enum):
@@ -66,7 +69,6 @@ class RTML(BaseElement):
         self.mode = None
         self.expires = None
         self.refcount = []
-        self.history = []
         self.RespondTo = None
         self.mode = mode
 
@@ -99,10 +101,11 @@ class RTML(BaseElement):
 
         # create the root element
         xmlns = self.namespace
+        ns = '{' + xmlns + '}'
         xsi = "http://www.w3.org/2001/XMLSchema-instance"
-        schemaLocation = "http://www.ivoa.net/xml/RTML/v3.3a http://www.astro.physik.uni-goettingen.de/~husser/RTML-3.2c.xsd"
-        root = etree.Element('RTML', {'{' + xsi + '}schemaLocation': schemaLocation, 'mode': name,
-                                      'uid': self.uid, 'version': "3.3a"}, nsmap={None: xmlns, 'xsi': xsi})
+        schemaLocation = "http://www.ivoa.net/xml/RTML/v3.3a http://www.astro.physik.uni-goettingen.de/~husser/RTML-3.3a.xsd"
+        root = etree.Element(ns+'RTML', {'{' + xsi + '}schemaLocation': schemaLocation, 'mode': name,
+                                         'uid': self.uid, 'version': "3.3a"}, nsmap={None: xmlns, 'xsi': xsi})
 
         # write xml
         self.to_xml(root)
@@ -163,15 +166,11 @@ class RTML(BaseElement):
         if self.expires is not None and not isinstance(self.expires, Time):
             raise ValueError('Value for "expires" is expected to be of type astropy.time.Time.')
 
-        # # add some default history entry
-        # if len(self.history) == 0:
-        #     self.add_history(History(self, agent="rtmlparse"))
-        #
-        # # add history
-        # if len(self.history) > 0:
-        #     history = etree.SubElement(parent, 'History')
-        #     for hist in self.history:
-        #         hist.to_xml(history)
+        # add some default history entry
+        if self.History is None:
+            self.History = History(self)
+        if len(self.find(Entry)) == 0:
+            Entry(self.History, agent='rtmlparse', description='File created.')
 
         # do reference count and reset inserted
         self.reset_processed()
@@ -228,9 +227,6 @@ class RTML(BaseElement):
         valid = xsd.assertValid(page)
         print xsd.error_log
         return valid
-
-    def add_history(self, history):
-        self.history.append(history)
 
     def get_plugins(self, interface, package):
         """

@@ -84,9 +84,9 @@ class UnitValue(object):
         # create new class
         return cls(value, units, attrib=dict(el.attrib))
 
-    def to_xml(self, parent, tagname):
+    def to_xml(self, parent, tagname, namespace=''):
         # element itself
-        el = etree.SubElement(parent, tagname)
+        el = etree.SubElement(parent, namespace + tagname)
         # value and units
         el.text = str(self.Value)
         el.attrib['units'] = self._units.value if isinstance(self._units, Enum) else str(self._units)

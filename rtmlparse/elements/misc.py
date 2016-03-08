@@ -82,3 +82,16 @@ class CoordinatesAccess(object):
     def Coordinates(self, value):
         from .coordinates import Coordinates
         self._set_one_element(Coordinates, value)
+
+
+class HistoryAccess(object):
+    @property
+    def History(self):
+        from .history import History
+        return self._get_one_element(History)
+
+    @History.setter
+    def History(self, value):
+        from .history import History
+        self._set_one_element(History, value)
+

@@ -64,7 +64,8 @@ class BaseElement(object):
                 attrib['id'] = self.uid
 
         # create element
-        base = etree.SubElement(parent, self.tagname, attrib=attrib)
+        ns = '{' + self.rtml.namespace + '}'
+        base = etree.SubElement(parent, ns + self.tagname, attrib=attrib)
 
         # if this element has not been processed before, add children
         if not self.processed:
@@ -268,10 +269,10 @@ class BaseElement(object):
         return {k: v for k, v in self.elements.iteritems() if isinstance(v, Telescope)}
 
     @staticmethod
-    def add_text_value(element, tagname, value, fmt='s', attrib={}):
+    def add_text_value(element, tagname, value, fmt='s', attrib={}, namespace=''):
         if value is not None:
             # create element
-            el = etree.SubElement(element, tagname)
+            el = etree.SubElement(element, namespace + tagname)
             # set text
             # el.text = ('{0:' + fmt + '}').format(value)
             el.text = str(value)
@@ -285,32 +286,32 @@ class BaseElement(object):
         return type(el.text) if el is not None else None
 
     @staticmethod
-    def add_enum_value(element, tagname, value):
+    def add_enum_value(element, tagname, value, namespace=''):
         if value is not None:
             # create element and set text
-            etree.SubElement(element, tagname).text = value.value
+            etree.SubElement(namespace + element, tagname).text = value.value
 
     @staticmethod
     def from_enum_value(element, tagname, type, namespace=''):
         return BaseElement.from_text_value(element, tagname, type, namespace)
 
     @staticmethod
-    def add_unit_value(element, tagname, value):
+    def add_unit_value(element, tagname, value, namespace=''):
         if value is not None:
-            value.to_xml(element, tagname)
+            value.to_xml(element, tagname, namespace=namespace)
 
     @staticmethod
     def from_unit_value(element, tagname, type, namespace=''):
         return type.from_xml(element, tagname, namespace=namespace)
 
     @staticmethod
-    def add_xy_value(element, tagname, value):
+    def add_xy_value(element, tagname, value, namespace=''):
         if value is not None:
             # create element
-            el = etree.SubElement(element, tagname)
+            el = etree.SubElement(namespace + element, tagname)
             # create X/Y
-            etree.SubElement(el, 'X').text = str(value[0])
-            etree.SubElement(el, 'Y').text = str(value[1])
+            etree.SubElement(el, namespace + 'X').text = str(value[0])
+            etree.SubElement(el, namespace + 'Y').text = str(value[1])
 
     @staticmethod
     def from_xy_value(element, tagname, namespace=''):
@@ -345,6 +346,6 @@ class BaseElement(object):
                           RuntimeWarning)
         # delete all
         for uid in elements:
-            self.rtml.delete(uid)
+            self.delete(uid) if self.tagname == 'RTML' else self.rtml.delete(uid)
         # add new element
         self.add_element(value)
