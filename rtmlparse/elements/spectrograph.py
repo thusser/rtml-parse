@@ -25,10 +25,11 @@ class Spectrograph(BaseElement, SpectralEfficiencyAccess, SpectralRegionAccess, 
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'Description', self.Description)
-        self.add_text_value(element, 'PositionAngle', self.PositionAngle, attrib={'units': 'degrees'})
+        self.add_text_value(element, 'Description', self.Description, namespace=ns)
+        self.add_text_value(element, 'PositionAngle', self.PositionAngle, attrib={'units': 'degrees'}, namespace=ns)
 
         # return base element
         return element

@@ -26,6 +26,7 @@ class Camera(BaseElement, SpectralEfficiencyAccess, SpectralRegionAccess):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
         self.add_text_value(element, 'Description', self.Description)

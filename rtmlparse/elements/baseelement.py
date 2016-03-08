@@ -289,11 +289,11 @@ class BaseElement(object):
     def add_enum_value(element, tagname, value, namespace=''):
         if value is not None:
             # create element and set text
-            etree.SubElement(namespace + element, tagname).text = value.value
+            etree.SubElement(element, namespace + tagname).text = value.value
 
     @staticmethod
     def from_enum_value(element, tagname, type, namespace=''):
-        return BaseElement.from_text_value(element, tagname, type, namespace)
+        return BaseElement.from_text_value(element, tagname, type, namespace=namespace)
 
     @staticmethod
     def add_unit_value(element, tagname, value, namespace=''):

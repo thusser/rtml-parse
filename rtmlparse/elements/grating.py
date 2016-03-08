@@ -17,10 +17,11 @@ class Grating(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # grating angle
         if self.Angle is not None:
-            angle = etree.SubElement(element, 'BlazeAngle')
+            angle = etree.SubElement(element, ns + 'BlazeAngle')
             angle.text = "{0:.3f}".format(self.Angle)
 
         # return base element

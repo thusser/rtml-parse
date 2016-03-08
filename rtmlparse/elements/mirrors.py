@@ -20,10 +20,11 @@ class Mirrors(BaseElement):
         element = BaseElement.to_xml(self, parent)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'Number', self.Number, 'd')
-        self.add_enum_value(element, 'Coating', self.Coating)
+        self.add_text_value(element, 'Number', self.Number, 'd', namespace=ns)
+        self.add_enum_value(element, 'Coating', self.Coating, namespace=ns)
 
         # return base element
         return element

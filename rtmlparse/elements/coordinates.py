@@ -54,14 +54,15 @@ class EquatorialCoordinates(Coordinates):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'RightAscension', self.RightAscension, 'f')
-        self.add_text_value(element, 'Declination', self.Declination, 'f')
-        self.add_text_value(element, 'Epoch', self.Epoch, 'f')
-        self.add_text_value(element, 'Equinox', self.Equinox, 'f')
-        self.add_enum_value(element, 'System', self.System)
-        self.add_text_value(element, 'Description', self.Description, 's')
+        self.add_text_value(element, 'RightAscension', self.RightAscension, 'f', namespace=ns)
+        self.add_text_value(element, 'Declination', self.Declination, 'f', namespace=ns)
+        self.add_text_value(element, 'Epoch', self.Epoch, 'f', namespace=ns)
+        self.add_text_value(element, 'Equinox', self.Equinox, 'f', namespace=ns)
+        self.add_enum_value(element, 'System', self.System, namespace=ns)
+        self.add_text_value(element, 'Description', self.Description, 's', namespace=ns)
 
         # return base element
         return element
@@ -97,11 +98,12 @@ class HorizontalCoordinates(Coordinates):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'Altitude', self.Altitude, 'f')
-        self.add_text_value(element, 'Azimuth', self.Azimuth, 'f')
-        self.add_text_value(element, 'Description', self.Description, 's')
+        self.add_text_value(element, 'Altitude', self.Altitude, 'f', namespace=ns)
+        self.add_text_value(element, 'Azimuth', self.Azimuth, 'f', namespace=ns)
+        self.add_text_value(element, 'Description', self.Description, 's', namespace=ns)
 
         # return base element
         return element
@@ -131,10 +133,11 @@ class PredefinedCoordinates(Coordinates):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
         etree.SubElement(element, self._position)
-        self.add_text_value(element, 'Description', self.Description, 's')
+        self.add_text_value(element, 'Description', self.Description, 's', namespace=ns)
 
         # return base element
         return element

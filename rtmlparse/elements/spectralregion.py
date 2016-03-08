@@ -34,6 +34,8 @@ class SpectralRegion(BaseElement):
         element = BaseElement.to_xml(self, parent)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
+
         # set text and return element
         element.text = self.Type.value
         return element

@@ -21,10 +21,11 @@ class SpectralEfficiency(BaseElement):
         element = BaseElement.to_xml(self, parent)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'Description', self.Description)
-        self.add_text_value(element, 'Uri', self.Uri)
+        self.add_text_value(element, 'Description', self.Description, namespace=ns)
+        self.add_text_value(element, 'Uri', self.Uri, namespace=ns)
 
         # return base element
         return element

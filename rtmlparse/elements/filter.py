@@ -89,6 +89,7 @@ class Filter(BaseElement):
         element = BaseElement.to_xml(self, parent)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # type
         if self.Type is not None:
@@ -96,11 +97,11 @@ class Filter(BaseElement):
 
         # other stuff
         if self.Center is not None:
-            self.Center.to_xml(element, 'Center')
+            self.Center.to_xml(element, 'Center', namespace=ns)
         if self.FWHM is not None:
-            self.FWHM.to_xml(element, 'FWHM')
-        self.add_text_value(element, 'PeakEfficiency', self.PeakEfficiency, 'f')
-        self.add_text_value(element, 'Uri', self.Uri, 's')
+            self.FWHM.to_xml(element, 'FWHM', namespace=ns)
+        self.add_text_value(element, 'PeakEfficiency', self.PeakEfficiency, 'f', namespace=ns)
+        self.add_text_value(element, 'Uri', self.Uri, 's', namespace=ns)
 
         # return base element
         return element

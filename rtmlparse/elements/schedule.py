@@ -19,12 +19,13 @@ class Schedule(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # exposures
         for exp in self.exposures:
-            exposure = etree.SubElement(element, 'Exposure')
+            exposure = etree.SubElement(element, ns + 'Exposure')
             exposure.set('count', '{0:d}'.format(exp[1]))
-            value = etree.SubElement(exposure, 'Value')
+            value = etree.SubElement(exposure, ns + 'Value')
             value.set('units', 'seconds')
             value.text = '{0:.2f}'.format(exp[0])
 

@@ -20,6 +20,7 @@ class Exposure(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # count
         if self.Count is not None:
@@ -27,11 +28,11 @@ class Exposure(BaseElement):
 
         # description
         if self.Description is not None:
-            etree.SubElement(element, 'Description').text = self.Description
+            etree.SubElement(element, ns + 'Description').text = self.Description
 
         # exposures
         for exposure in self.Exposures:
-            value = etree.SubElement(element, 'Value')
+            value = etree.SubElement(element, ns + 'Value')
             value.attrib['units'] = 'seconds'
             value.text = '{0:.3f}'.format(exposure)
 

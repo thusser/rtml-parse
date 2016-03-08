@@ -19,10 +19,11 @@ class Slit(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'PositionAngle', self.PositionAngle, 'f')
-        self.add_xy_value(element, 'WidthLength', self.WidthLength)
+        self.add_text_value(element, 'PositionAngle', self.PositionAngle, 'f', namespace=ns)
+        self.add_xy_value(element, 'WidthLength', self.WidthLength, namespace=ns)
 
         # return base element
         return element

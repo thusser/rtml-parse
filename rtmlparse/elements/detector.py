@@ -30,16 +30,18 @@ class Detector(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_xy_value(element, 'Binning', self.Binning)
-        self.add_text_value(element, 'ColumnPixelSize', self.ColumnPixelSize, '.8f', attrib={'units': 'micrometers'})
-        self.add_text_value(element, 'Description', self.Description)
-        self.add_text_value(element, 'NumColumns', self.NumColumns, 'd')
-        self.add_text_value(element, 'NumRows', self.NumRows, 'd')
-        self.add_text_value(element, 'PixelRadius', self.PixelRadius, attrib={'units': 'micrometers'})
-        self.add_text_value(element, 'PixelSize', self.PixelSize, attrib={'units': 'micrometers'})
-        self.add_text_value(element, 'PositionAngle', self.PositionAngle, attrib={'units': 'degrees'})
+        self.add_xy_value(element, 'Binning', self.Binning, namespace=ns)
+        self.add_text_value(element, 'ColumnPixelSize', self.ColumnPixelSize, '.8f', attrib={'units': 'micrometers'},
+                            namespace=ns)
+        self.add_text_value(element, 'Description', self.Description, namespace=ns)
+        self.add_text_value(element, 'NumColumns', self.NumColumns, 'd', namespace=ns)
+        self.add_text_value(element, 'NumRows', self.NumRows, 'd', namespace=ns)
+        self.add_text_value(element, 'PixelRadius', self.PixelRadius, attrib={'units': 'micrometers'}, namespace=ns)
+        self.add_text_value(element, 'PixelSize', self.PixelSize, attrib={'units': 'micrometers'}, namespace=ns)
+        self.add_text_value(element, 'PositionAngle', self.PositionAngle, attrib={'units': 'degrees'}, namespace=ns)
 
         # return base element
         return element

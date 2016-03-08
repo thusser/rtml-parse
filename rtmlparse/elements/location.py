@@ -23,12 +23,13 @@ class Location(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'EastLongitude', self.EastLongitude, attrib={'units': 'degrees'})
-        self.add_text_value(element, 'Latitude', self.Latitude, attrib={'units': 'degrees'})
-        self.add_text_value(element, 'Height', self.Height, attrib={'units': 'meters'})
-        self.add_text_value(element, 'TimeZone', self.TimeZone)
+        self.add_text_value(element, 'EastLongitude', self.EastLongitude, attrib={'units': 'degrees'}, namespace=ns)
+        self.add_text_value(element, 'Latitude', self.Latitude, attrib={'units': 'degrees'}, namespace=ns)
+        self.add_text_value(element, 'Height', self.Height, attrib={'units': 'meters'}, namespace=ns)
+        self.add_text_value(element, 'TimeZone', self.TimeZone, namespace=ns)
 
         # return base element
         return element

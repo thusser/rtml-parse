@@ -18,12 +18,13 @@ class Target(BaseElement, CoordinatesAccess):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # magnitude
         if self.TargetBrightness is not None:
-            brightness = etree.SubElement(element, 'TargetBrightness')
-            etree.SubElement(brightness, 'Magnitude').text = '{0:.2f}'.format(self.TargetBrightness)
-            etree.SubElement(brightness, 'Type').text = 'V'
+            brightness = etree.SubElement(element, ns + 'TargetBrightness')
+            etree.SubElement(brightness, ns + 'Magnitude').text = '{0:.2f}'.format(self.TargetBrightness)
+            etree.SubElement(brightness, ns + 'Type').text = 'V'
 
         # return base element
         return element

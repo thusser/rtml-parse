@@ -34,13 +34,15 @@ class Telescope(BaseElement, CoordinatesAccess, SpectralEfficiencyAccess, Spectr
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return
+        ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_unit_value(element, 'Aperture', self.Aperture)
-        self.add_text_value(element, 'Description', self.Description)
-        self.add_text_value(element, 'FocalLength', self.FocalLength, attrib={'units': 'meters'})
-        self.add_text_value(element, 'FocalRatio', self.FocalRatio)
-        self.add_text_value(element, 'PlateScale', self.PlateScale, attrib={'units': 'arcseconds per millimeter'})
+        self.add_unit_value(element, 'Aperture', self.Aperture, namespace=ns)
+        self.add_text_value(element, 'Description', self.Description, namespace=ns)
+        self.add_text_value(element, 'FocalLength', self.FocalLength, attrib={'units': 'meters'}, namespace=ns)
+        self.add_text_value(element, 'FocalRatio', self.FocalRatio, namespace=ns)
+        self.add_text_value(element, 'PlateScale', self.PlateScale, attrib={'units': 'arcseconds per millimeter'},
+                            namespace=ns)
 
         # return base element
         return element

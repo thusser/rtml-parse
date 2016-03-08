@@ -5,6 +5,7 @@ from .coordinates import Coordinates, EquatorialCoordinates, HorizontalCoordinat
     ParkPositionCoordinates, ServicePositionCoordinates, ZenithCoordinates
 from .detector import Detector
 from .device import Device
+from .entry import Entry
 from .exposure import Exposure
 from .exposureconstraint import ExposureConstraint
 from .filter import Filter, FilterTypes

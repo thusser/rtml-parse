@@ -23,12 +23,13 @@ class ExposureConstraint(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
+        ns = '{' + self.rtml.namespace + '}'
 
         # other fields
-        self.add_text_value(element, 'Description', self.Description)
-        self.add_text_value(element, 'Count', self.Count, 'd')
-        self.add_text_value(element, 'MinimumSignalToNoise', self.MinimumSignalToNoise, '.2f')
-        self.add_text_value(element, 'MaximumSignalToNoise', self.MaximumSignalToNoise, '.2f')
+        self.add_text_value(element, 'Description', self.Description, namespace=ns)
+        self.add_text_value(element, 'Count', self.Count, 'd', namespace=ns)
+        self.add_text_value(element, 'MinimumSignalToNoise', self.MinimumSignalToNoise, '.2f', namespace=ns)
+        self.add_text_value(element, 'MaximumSignalToNoise', self.MaximumSignalToNoise, '.2f', namespace=ns)
 
         # return base element
         return element
