@@ -308,7 +308,7 @@ class BaseElement(object):
     def add_xy_value(element, tagname, value, namespace=''):
         if value is not None:
             # create element
-            el = etree.SubElement(namespace + element, tagname)
+            el = etree.SubElement(element, namespace + tagname)
             # create X/Y
             etree.SubElement(el, namespace + 'X').text = str(value[0])
             etree.SubElement(el, namespace + 'Y').text = str(value[1])

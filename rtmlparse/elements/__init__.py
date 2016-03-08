@@ -33,3 +33,5 @@ from .target import Target
 from .telescope import Telescope
 from .observatory import Observatory
 from .weatherreport import WeatherReport
+from .window import Window
+from .windowing import Windowing

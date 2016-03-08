@@ -13,7 +13,7 @@ class Gain(BaseElement):
 
     def __init__(self, parent, name=None, uid=None):
         # BaseElement
-        BaseElement.__init__(self, 'Bias', parent, name=name, uid=uid)
+        BaseElement.__init__(self, 'Gain', parent, name=name, uid=uid)
 
         # Bias
         self.Base64Data = None

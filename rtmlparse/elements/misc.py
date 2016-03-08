@@ -95,3 +95,15 @@ class HistoryAccess(object):
         from .history import History
         self._set_one_element(History, value)
 
+
+class WindowingAccess(object):
+    @property
+    def Windowing(self):
+        from .windowing import Windowing
+        return self._get_one_element(Windowing)
+
+    @Windowing.setter
+    def Windowing(self, value):
+        from .windowing import Windowing
+        self._set_one_element(Windowing, value)
+

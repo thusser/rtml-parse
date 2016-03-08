@@ -29,6 +29,12 @@ def main():
     #camera.Description = 'Scientific Instruments 1100'
     camera.SpectralRegion = SpectralRegionTypes.optical
 
+    # detector
+    detector = Detector(camera)
+    detector.NumColumns = 2048
+    detector.NumRows = 2048
+    detector.PixelSize = 15.
+
     # dump it
     print rtml.dumps(pretty_print=True)
     with open("rtml.xml", "wb") as f:
