@@ -10,6 +10,7 @@ from .device import Device
 from .entry import Entry
 from .exposure import Exposure
 from .exposureconstraint import ExposureConstraint
+from .flatfield import FlatField
 from .filter import Filter, FilterTypes
 from .filterwheel import FilterWheel
 from .grating import Grating
