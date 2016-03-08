@@ -98,8 +98,8 @@ class TestElements(unittest.TestCase):
         camera = Camera(self.rtml, name='TestCamera')
         wheel = FilterWheel(camera)
         f = Filter(wheel, filter_type=FilterTypes.clear)
-        f.Center = unitvalues.SpectralType(3.14159, units.SpectralUnits.nanometers)
-        f.FWHM = unitvalues.SpectralType(42., units.SpectralUnits.centimeters)
+        f.Center = unitvalues.SpectralValue(3.14159, units.SpectralUnits.nanometers)
+        f.FWHM = unitvalues.SpectralValue(42., units.SpectralUnits.centimeters)
         f.PeakEfficiency = 0.95
         f.Uri = 'uri://test.org/'
 
@@ -159,6 +159,22 @@ class TestElements(unittest.TestCase):
         self.assertEqual(location.Latitude, -32.379444)
         self.assertEqual(location.Height, 1798.)
         self.assertEqual(location.TimeZone, 2)
+
+    def test_telescope(self):
+        # create a telescope
+        tel = Telescope(self.rtml)
+        tel.Aperture = unitvalues.ApertureValue(15.)
+        tel.Aperture['type'] = units.ApertureTypes.effective
+
+        # save it and load it again
+        #print self.rtml.dumps(pretty_print=True)
+        rtml = self.saveLoad()
+
+        # check
+        tel = rtml.find_first(Telescope)
+        self.assertEqual(tel.Aperture.Value, 15.)
+        self.assertEqual(tel.Aperture['type'], units.ApertureTypes.effective)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

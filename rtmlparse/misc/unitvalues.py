@@ -19,9 +19,7 @@ class UnitValue(object):
         # set them
         self.Value = value
         self.Units = units
-        print attrib
         for a in attrib:
-            print a, attrib[a]
             self[a] = attrib[a]
 
     @property
@@ -84,7 +82,7 @@ class UnitValue(object):
         value = float(el.text)
         units = el.attrib['units']
         # create new class
-        return cls(value, units, attrib=el.attrib)
+        return cls(value, units, attrib=dict(el.attrib))
 
     def to_xml(self, parent, tagname):
         # element itself
@@ -98,13 +96,20 @@ class UnitValue(object):
                 el.attrib[a] = self._attrib[a].value if isinstance(self._attrib[a], Enum) else str(self._attrib[a])
 
 
-class SpectralType(UnitValue):
-    def __init__(self, value, units):
+class SpectralValue(UnitValue):
+    def __init__(self, value, units, attrib={}):
         UnitValue.__init__(self, float, SpectralUnits, value=value, units=units)
 
 
-class VelocityType(UnitValue):
+class VelocityValue(UnitValue):
     def __init__(self, value, units, attrib={}, system=None):
         if system is not None: attrib['system'] = system
         UnitValue.__init__(self, float, VelocityUnits, {'system': VelocitySystemTypes},
+                           value=value, units=units, attrib=attrib)
+
+
+class ApertureValue(UnitValue):
+    def __init__(self, value, units='meters', attrib={}, ap_type=None):
+        if ap_type is not None: attrib['type'] = ap_type
+        UnitValue.__init__(self, float, LengthUnits, {'type': ApertureTypes},
                            value=value, units=units, attrib=attrib)

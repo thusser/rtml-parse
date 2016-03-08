@@ -28,3 +28,12 @@ class VelocitySystemTypes(Enum):
     geocentric = 'geocentric'
     heliocentric = 'heliocentric'
     lsr = 'lsr'
+
+
+class LengthUnits(Enum):
+    meters = 'meters'
+
+
+class ApertureTypes(Enum):
+    geometric = 'geometric'
+    effective = 'effective'

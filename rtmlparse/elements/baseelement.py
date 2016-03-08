@@ -282,6 +282,15 @@ class BaseElement(object):
         return type(el.text) if el is not None else None
 
     @staticmethod
+    def add_unit_value(element, tagname, value):
+        if value is not None:
+            value.to_xml(element, tagname)
+
+    @staticmethod
+    def from_unit_value(element, tagname, type, namespace=''):
+        return type.from_xml(element, tagname, namespace=namespace)
+
+    @staticmethod
     def add_xy_value(element, tagname, value):
         if value is not None:
             # create element

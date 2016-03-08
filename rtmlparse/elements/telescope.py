@@ -2,10 +2,12 @@ from lxml import etree
 
 from .baseelement import BaseElement
 from .misc import auto_attr_check
+from rtmlparse.misc import units, unitvalues
 
 
 @auto_attr_check
 class Telescope(BaseElement):
+    Aperture = unitvalues.ApertureValue
     Description = str
     FocalLength = float
     FocalRatio = str
@@ -18,6 +20,7 @@ class Telescope(BaseElement):
                              valid_element_types=[e.Camera, e.Location, e.Setup, e.Spectrograph])
 
         # Telescope
+        self.Aperture = None
         self.Description = None
         self.FocalLength = None
         self.FocalRatio = None
@@ -30,6 +33,7 @@ class Telescope(BaseElement):
             return
 
         # other stuff
+        self.add_unit_value(element, 'Aperture', self.Aperture)
         self.add_text_value(element, 'Description', self.Description)
         self.add_text_value(element, 'FocalLength', self.FocalLength, attrib={'units': 'meters'})
         self.add_text_value(element, 'FocalRatio', self.FocalRatio)
@@ -44,6 +48,7 @@ class Telescope(BaseElement):
         ns = '{' + rtml.namespace + '}'
 
         # other stuff
+        self.Aperture = self.from_unit_value(element, 'Aperture', unitvalues.ApertureValue, namespace=ns)
         self.Description = self.from_text_value(element, 'Description', str, namespace=ns)
         self.FocalLength = self.from_text_value(element, 'FocalLength', float, namespace=ns)
         self.FocalRatio = self.from_text_value(element, 'FocalRatio', str, namespace=ns)
