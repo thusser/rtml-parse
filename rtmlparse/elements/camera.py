@@ -29,8 +29,9 @@ class Camera(BaseElement, SpectralEfficiencyAccess, SpectralRegionAccess):
         ns = '{' + self.rtml.namespace + '}'
 
         # other stuff
-        self.add_text_value(element, 'Description', self.Description)
-        self.add_text_value(element, 'PlateScale', self.PlateScale, attrib={'units': 'arcseconds per millimeter'})
+        self.add_text_value(element, 'Description', self.Description, namespace=ns)
+        self.add_text_value(element, 'PlateScale', self.PlateScale, attrib={'units': 'arcseconds per millimeter'},
+                            namespace=ns)
 
         # return base element
         return element
