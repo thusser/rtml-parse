@@ -4,6 +4,7 @@ from .camera import Camera
 from .catalogue import Catalogue
 from .coordinates import Coordinates, EquatorialCoordinates, HorizontalCoordinates, DomeScreenCoordinates, \
     ParkPositionCoordinates, ServicePositionCoordinates, ZenithCoordinates
+from .darkcurrent import DarkCurrent
 from .detector import Detector
 from .device import Device
 from .entry import Entry
