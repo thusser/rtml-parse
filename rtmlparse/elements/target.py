@@ -1,19 +1,16 @@
 from lxml import etree
 
 from .baseelement import BaseElement
-from .misc import auto_attr_check
+from .misc import auto_attr_check, CoordinatesAccess
 
 
 @auto_attr_check
-class Target(BaseElement):
-    RightAscension = float
-    Declination = float
+class Target(BaseElement, CoordinatesAccess):
     TargetBrightness = float
 
     def __init__(self, parent, name=None, uid=None):
-        BaseElement.__init__(self, 'Target', parent, name=name, uid=uid)
-        self.RightAscension = None
-        self.Declination = None
+        import rtmlparse.elements as e
+        BaseElement.__init__(self, 'Target', parent, name=name, uid=uid, valid_element_types=[e.Coordinates])
         self.TargetBrightness = None
 
     def to_xml(self, parent, add_children=True):
@@ -21,14 +18,6 @@ class Target(BaseElement):
         element = BaseElement.to_xml(self, parent, add_children=add_children)
         if element is None:
             return None
-
-        # set coordinates
-        if self.RightAscension is not None and self.Declination is not None:
-            coords = etree.SubElement(element, 'Coordinates')
-            ra = etree.SubElement(coords, 'RightAscension')
-            etree.SubElement(ra, 'Value').text = '{0:.8f}'.format(self.RightAscension)
-            dec = etree.SubElement(coords, 'Declination')
-            etree.SubElement(dec, 'Value').text = '{0:.8f}'.format(self.Declination)
 
         # magnitude
         if self.TargetBrightness is not None:
@@ -43,12 +32,6 @@ class Target(BaseElement):
         # base call
         BaseElement.from_xml(self, xml, rtml)
         ns = '{' + rtml.namespace + '}'
-
-        # coordinates
-        coords = xml.find(ns + 'Coordinates')
-        if coords is not None:
-            self.RightAscension = float(coords.find(ns + 'RightAscension').find(ns + 'Value').text)
-            self.Declination = float(coords.find(ns + 'Declination').find(ns + 'Value').text)
 
         # magnitude
         mag = xml.find(ns + 'TargetBrightness')

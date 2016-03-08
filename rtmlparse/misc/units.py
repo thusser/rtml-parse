@@ -37,3 +37,21 @@ class LengthUnits(Enum):
 class ApertureTypes(Enum):
     geometric = 'geometric'
     effective = 'effective'
+    
+
+class CoordinateSystemTypes(Enum):
+    ICRS = 'ICRS'
+    FK4 = 'FK4'
+    FK4_no_e = 'FK4-no-e'
+    FK5 = 'FK5'
+    GAPPT = 'GAPPT'
+    other = 'other'
+    
+    
+class CoatingTypes(Enum):
+    aluminum = 'aluminum'
+    enhanced_aluminum = 'enhanced aluminum'
+    enhanced_silver = 'enhanced silver'
+    gold = 'gold'
+    mercury = 'mercury'
+    silver = 'silver'

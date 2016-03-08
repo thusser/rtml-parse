@@ -70,3 +70,15 @@ class SlitMaskAccess(object):
     def SlitMask(self, value):
         from .slitmask import SlitMask
         self._set_one_element(SlitMask, value)
+
+
+class CoordinatesAccess(object):
+    @property
+    def Coordinates(self):
+        from .coordinates import Coordinates
+        return self._get_one_element(Coordinates)
+
+    @Coordinates.setter
+    def Coordinates(self, value):
+        from .coordinates import Coordinates
+        self._set_one_element(Coordinates, value)

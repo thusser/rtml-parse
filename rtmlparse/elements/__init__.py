@@ -1,6 +1,8 @@
 from .calibration import Calibration
 from .camera import Camera
 from .catalogue import Catalogue
+from .coordinates import Coordinates, EquatorialCoordinates, HorizontalCoordinates, DomeScreenCoordinates, \
+    ParkPositionCoordinates, ServicePositionCoordinates, ZenithCoordinates
 from .detector import Detector
 from .device import Device
 from .exposure import Exposure
@@ -10,6 +12,7 @@ from .filterwheel import FilterWheel
 from .grating import Grating
 from .history import History
 from .location import Location
+from .mirrors import Mirrors
 from .pipeline import Pipeline
 from .project import Project
 from .schedule import Schedule

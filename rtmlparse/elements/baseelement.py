@@ -88,6 +88,10 @@ class BaseElement(object):
         for element in self.elements.values():
             element.to_xml(base)
 
+    @classmethod
+    def create(cls, element, rtml, name=None, uid=None):
+        return cls(rtml, name=name, uid=uid)
+
     def from_xml(self, xml, rtml):
         # loop all nodes
         for el in xml:
@@ -116,8 +120,7 @@ class BaseElement(object):
 
                 # is it a BaseElement and not History?
                 if issubclass(klass, BaseElement) and not issubclass(klass, rtmlparse.elements.History):
-                    # instantiate class
-                    obj = klass(rtml, name=name, uid=uid)
+                    obj = klass.create(el, rtml, name=name, uid=uid)
 
                     # if rtml is not myself, add it
                     if rtml != self:
@@ -280,6 +283,16 @@ class BaseElement(object):
     def from_text_value(element, tagname, type=str, namespace=''):
         el = element.find(namespace + tagname)
         return type(el.text) if el is not None else None
+
+    @staticmethod
+    def add_enum_value(element, tagname, value):
+        if value is not None:
+            # create element and set text
+            etree.SubElement(element, tagname).text = value.value
+
+    @staticmethod
+    def from_enum_value(element, tagname, type, namespace=''):
+        return BaseElement.from_text_value(element, tagname, type, namespace)
 
     @staticmethod
     def add_unit_value(element, tagname, value):

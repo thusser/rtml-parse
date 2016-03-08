@@ -1,23 +1,26 @@
 from lxml import etree
 
 from .baseelement import BaseElement
-from .misc import auto_attr_check
+from .misc import auto_attr_check, CoordinatesAccess, SpectralRegionAccess, SpectralEfficiencyAccess
 from rtmlparse.misc import units, unitvalues
 
 
 @auto_attr_check
-class Telescope(BaseElement):
+class Telescope(BaseElement, CoordinatesAccess, SpectralEfficiencyAccess, SpectralRegionAccess):
     Aperture = unitvalues.ApertureValue
     Description = str
     FocalLength = float
     FocalRatio = str
     PlateScale = float
+    # TODO: TrackRate
 
     def __init__(self, parent, name=None, uid=None):
         # BaseElement
         import rtmlparse.elements as e
         BaseElement.__init__(self, 'Telescope', parent, name=name, uid=uid,
-                             valid_element_types=[e.Camera, e.Location, e.Setup, e.Spectrograph])
+                             valid_element_types=[e.Camera, e.Location, e.Setup, e.Spectrograph, e.Coordinates,
+                                                  e.Device, e.SpectralEfficiency, e.SpectralRegion, e.Telescope,
+                                                  e.WeatherReport, e.Mirrors])
 
         # Telescope
         self.Aperture = None

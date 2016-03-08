@@ -165,16 +165,74 @@ class TestElements(unittest.TestCase):
         tel = Telescope(self.rtml)
         tel.Aperture = unitvalues.ApertureValue(15.)
         tel.Aperture['type'] = units.ApertureTypes.effective
+        tel.Coordinates = ParkPositionCoordinates(tel)
+        tel.FocalLength = 5.
+        tel.FocalRatio = 'f/7'
+        tel.PlateScale = 42.
+        Mirrors(tel, number=3, coating=units.CoatingTypes.silver)
 
         # save it and load it again
-        #print self.rtml.dumps(pretty_print=True)
         rtml = self.saveLoad()
 
         # check
         tel = rtml.find_first(Telescope)
         self.assertEqual(tel.Aperture.Value, 15.)
         self.assertEqual(tel.Aperture['type'], units.ApertureTypes.effective)
+        self.assertTrue(isinstance(tel.Coordinates, ParkPositionCoordinates))
+        self.assertEqual(tel.FocalLength, 5.)
+        self.assertEqual(tel.FocalRatio, 'f/7')
+        self.assertEqual(tel.PlateScale, 42.)
+        mirrors = tel.find_first(Mirrors)
+        self.assertEqual(mirrors.Number, 3)
+        self.assertEqual(mirrors.Coating, units.CoatingTypes.silver)
 
+    def test_coordinates_equatorial(self):
+        # create target and coordinates
+        target = Target(self.rtml)
+        target.Coordinates = EquatorialCoordinates(target)
+        target.Coordinates.RightAscension = 3.14159
+        target.Coordinates.Declination = 42.
+        target.Coordinates.Epoch = 2000.
+        target.Coordinates.Equinox = 2001.
+        target.Coordinates.System = units.CoordinateSystemTypes.FK5
+
+        # save it and load it again
+        rtml = self.saveLoad()
+
+        # check
+        target = rtml.find_first(Target)
+        self.assertEqual(target.Coordinates.RightAscension, 3.14159)
+        self.assertEqual(target.Coordinates.Declination, 42.)
+        self.assertEqual(target.Coordinates.Epoch, 2000.)
+        self.assertEqual(target.Coordinates.Equinox, 2001.)
+        self.assertEqual(target.Coordinates.System, units.CoordinateSystemTypes.FK5)
+
+    def test_coordinates_horizontal(self):
+        # create target and coordinates
+        target = Target(self.rtml)
+        target.Coordinates = HorizontalCoordinates(target)
+        target.Coordinates.Altitude = 65.
+        target.Coordinates.Azimuth = 25.
+
+        # save it and load it again
+        rtml = self.saveLoad()
+
+        # check
+        target = rtml.find_first(Target)
+        self.assertEqual(target.Coordinates.Altitude, 65.)
+        self.assertEqual(target.Coordinates.Azimuth, 25.)
+
+    def test_coordinates_park(self):
+        # create target and coordinates
+        target = Target(self.rtml)
+        target.Coordinates = ParkPositionCoordinates(target)
+
+        # save it and load it again
+        rtml = self.saveLoad()
+
+        # check
+        target = rtml.find_first(Target)
+        self.assertTrue(isinstance(target.Coordinates, ParkPositionCoordinates))
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
