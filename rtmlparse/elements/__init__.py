@@ -1,3 +1,4 @@
+from .bias import Bias
 from .calibration import Calibration
 from .camera import Camera
 from .catalogue import Catalogue

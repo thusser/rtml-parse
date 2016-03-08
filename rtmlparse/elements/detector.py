@@ -15,7 +15,8 @@ class Detector(BaseElement):
     PositionAngle = float
 
     def __init__(self, parent, name=None, uid=None):
-        BaseElement.__init__(self, 'Detector', parent, name=name, uid=uid)
+        import rtmlparse.elements as e
+        BaseElement.__init__(self, 'Detector', parent, name=name, uid=uid, valid_element_types=[e.Bias])
         self.Binning = None
         self.ColumnPixelSize = None
         self.Description = None
