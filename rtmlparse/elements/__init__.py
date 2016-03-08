@@ -13,6 +13,7 @@ from .exposureconstraint import ExposureConstraint
 from .flatfield import FlatField
 from .filter import Filter, FilterTypes
 from .filterwheel import FilterWheel
+from .gain import Gain
 from .grating import Grating
 from .history import History
 from .location import Location
